@@ -7,7 +7,7 @@ module svn_dcdr_n (
     output [7:0] AN
 );
 
-svn_dcdr svn1 (
+(* keep_hierarchy = "yes" *)svn_dcdr svn1 (
     .in(in),
     .CA(CA),
     .CB(CB),
@@ -19,7 +19,7 @@ svn_dcdr svn1 (
     .DP(DP)
 );
 
-shift_reg #(8, 1) display_shift (
+(* keep_hierarchy = "yes" *)shift_reg #(8, 1) display_shift (
     .sys_rst_n(sys_rst_n),
     .clk(clk),
     .enable(1'b1),
