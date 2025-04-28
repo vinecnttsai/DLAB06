@@ -1,4 +1,4 @@
-module tb_top ();
+module tb_top_module ();
 
     reg sys_clk;
     reg sys_rst_n;
