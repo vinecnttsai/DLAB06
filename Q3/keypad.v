@@ -11,7 +11,6 @@ module keypad(
     output [3:0] locked_out
 );
 
-    wire [1:0] mux_row;
     (*mark_debug = "true", dont_touch = "true"*)reg [3:0] out;
     (*mark_debug = "true", dont_touch = "true"*)wire scn_clk;
     parameter default_out = 4'hf;
