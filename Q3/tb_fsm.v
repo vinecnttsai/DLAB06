@@ -1,3 +1,4 @@
+//需要先改一下top_module把key_pad覆蓋掉，新增註解
 `timescale 1ns/1ps
 
 module tb_fsm;
