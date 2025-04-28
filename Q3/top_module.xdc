@@ -33,8 +33,8 @@ set_property -dict {PACKAGE_PIN U13 IOSTANDARD LVCMOS33} [get_ports {AN[7]}]
 
 set_property -dict {PACKAGE_PIN C12 IOSTANDARD LVCMOS33} [get_ports sys_rst_n]
 
-set_property -dict {PACKAGE_PIN N17 IOSTANDARD LVCMOS33} [get_ports sum_button_n]
-set_property -dict {PACKAGE_PIN M18 IOSTANDARD LVCMOS33} [get_ports clr_button_n]
+set_property -dict {PACKAGE_PIN N17 IOSTANDARD LVCMOS33} [get_ports sum_button]
+set_property -dict {PACKAGE_PIN M18 IOSTANDARD LVCMOS33} [get_ports clr_button]
 
 ##Pmod Header JA
 
