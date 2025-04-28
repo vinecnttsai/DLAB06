@@ -71,13 +71,5 @@ module top_modul_tb;
         #500;
         $stop;
     end
-    
-    always @(posedge sys_clk or negedge sys_rst_n) begin
-        if (!sys_rst_n) begin
-            $display("Reset active - seq_shift_sliced = X");
-        end else begin
-            $display("At time %t: cnt = %d, seq_shift = %h, seq_shift_sliced = %h", $time, uut.m1.cnt, uut.m1.seq_shift, uut.m1.seq_shift_sliced);
-        end
-    end
 
 endmodule
