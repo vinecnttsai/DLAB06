@@ -29,14 +29,14 @@ always @(posedge clk_high or negedge sys_rst_n) begin
         seq_shift_sliced <= seq_shift[cnt * WIDTH +: WIDTH];
 end
 
-(* keep_hierarchy = "yes" *)fq_div #(50_000_000) dq_div_200 ( // Simulation : 50
+    (* keep_hierarchy = "yes" *)fq_div #(50_000_000) fq_div_low ( // Simulation : 50
     .sys_rst_n(sys_rst_n),
     .org_clk(sys_clk),
     .div_n_clk(clk_low)
 );
 
 
-(* keep_hierarchy = "yes" *)fq_div #(5_000) dq_div_10 ( // Simulation : 3
+    (* keep_hierarchy = "yes" *)fq_div #(5_000) fq_div_high ( // Simulation : 3
     .sys_rst_n(sys_rst_n),
     .org_clk(sys_clk),
     .div_n_clk(clk_high)
