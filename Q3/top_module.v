@@ -2,8 +2,8 @@ module top_module (
     input sys_clk,
     input sys_rst_n,
     input sw,
-    input sum_button_n,
-    input clr_button_n,
+    input sum_button,
+    input clr_button,
     input E,
     input F,
     input G,
@@ -95,7 +95,7 @@ end
 always @(*) begin
         case (Q)
             IDLE1: begin
-                if (clr_button_n) begin
+                if (clr_button) begin
                     Q_next <= CLEAR;
                 end else if (sw) begin
                     Q_next <= IDLE2;
@@ -104,7 +104,7 @@ always @(*) begin
                 end
             end
             IDLE2: begin
-                if (clr_button_n) begin
+                if (clr_button) begin
                     Q_next <= CLEAR;
                 end else if (!sw) begin
                     Q_next <= LOADED1;
@@ -113,23 +113,23 @@ always @(*) begin
                 end
             end
             LOADED1: begin
-                if (clr_button_n) begin
+                if (clr_button) begin
                     Q_next <= CLEAR;
-                end else if (sum_button_n) begin
+                end else if (sum_button) begin
                     Q_next <= SUM;
                 end else begin
                     Q_next <= LOADED1;
                 end
             end
             SUM: begin
-                if (clr_button_n) begin
+                if (clr_button) begin
                     Q_next <= CLEAR;
                 end else begin
                     Q_next <= SUM;
                 end
             end
             CLEAR: begin
-                if (clr_button_n || sw ||  sum_button_n) begin
+                if (clr_button || sw ||  sum_button) begin
                     Q_next <= CLEAR;
                 end else begin
                     Q_next <= IDLE1;
@@ -137,7 +137,7 @@ always @(*) begin
             end
             default: Q_next <= IDLE1;
         endcase
-    end//改了posedge, combinational circuit, clr_button_n || sw ||  sum_button_n, clr_button_n優先及最高
+    end//改了posedge, combinational circuit, clr_button || sw ||  sum_button, clr_button優先及最高
 
     always @(*) begin
         case (Q)
