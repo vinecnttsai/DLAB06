@@ -37,10 +37,9 @@ module top_module (
     //FSM
     parameter [2:0] IDLE1 = 0,
                     IDLE2 = 1,
-                    LOADED1 = 2,
-                    LOADED2 = 3,
-                    SUM = 4,
-                    CLEAR = 5;
+                    LOAD = 2,
+                    SUM = 3,
+                    CLEAR = 4;
     (* mark_debug = "true", dont_touch = "true" *)reg [2:0] Q;
     (* mark_debug = "true", dont_touch = "true" *)reg [2:0] Q_next;
 
@@ -107,18 +106,18 @@ always @(*) begin
                 if (clr_button) begin
                     Q_next <= CLEAR;
                 end else if (!sw) begin
-                    Q_next <= LOADED1;
+                    Q_next <= LOAD;
                 end else begin
                     Q_next <= IDLE2;
                 end
             end
-            LOADED1: begin
+            LOAD: begin
                 if (clr_button) begin
                     Q_next <= CLEAR;
                 end else if (sum_button) begin
                     Q_next <= SUM;
                 end else begin
-                    Q_next <= LOADED1;
+                    Q_next <= LOAD;
                 end
             end
             SUM: begin
@@ -147,7 +146,7 @@ always @(*) begin
             IDLE2: begin
                 display_bi = add2;
             end
-            LOADED1: begin
+            LOAD: begin
                 display_bi = idle_val;
             end
             SUM: begin
