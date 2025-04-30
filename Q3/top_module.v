@@ -1,7 +1,7 @@
 module top_module (
     input sys_clk,
     input sys_rst_n,
-    input sw,
+    input load_button,
     input sum_button,
     input clr_button,
     input E,
@@ -20,11 +20,10 @@ module top_module (
     output CG,
     output DP,
     output [7:0] AN
-    //output [3:0] test
+    //output [3:0] test // for Simulation
 );
     reg [7:0] display_bi;
     wire [7:0] display_dec;
-    (* mark_debug = "true", dont_touch = "true" *)wire [3:0] key_pad;
     reg [7:0] audend;
     reg [7:0] addend;
     wire [7:0] sum;
@@ -39,6 +38,8 @@ module top_module (
                     LOAD = 2,
                     SUM = 3,
                     CLEAR = 4;
+    // debug
+    (* mark_debug = "true", dont_touch = "true" *)wire [3:0] key_pad;
     (* mark_debug = "true", dont_touch = "true" *)reg [2:0] Q;
     (* mark_debug = "true", dont_touch = "true" *)reg [2:0] Q_next;
 
@@ -54,6 +55,7 @@ module top_module (
         .D(D),
         .locked_out(key_pad)
     );
+    // assign key_pad = test // for Simulation
 
     wire [7:0] display_dec_no_zero; // removing leading zero
     assign display_dec_no_zero = (display_dec[7:0] > 8'h09) ? display_dec[7:0] : {4'hf, display_dec[3:0]};
@@ -93,7 +95,7 @@ always @(*) begin
             ADD1: begin
                 if (clr_button) begin
                     Q_next <= CLEAR;
-                end else if (sw) begin
+                end else if (load_button) begin
                     Q_next <= ADD2;
                 end else begin
                     Q_next <= ADD1;
@@ -102,7 +104,7 @@ always @(*) begin
             ADD2: begin
                 if (clr_button) begin
                     Q_next <= CLEAR;
-                end else if (!sw) begin
+                end else if (load_button) begin
                     Q_next <= LOAD;
                 end else begin
                     Q_next <= ADD2;
@@ -125,7 +127,7 @@ always @(*) begin
                 end
             end
             CLEAR: begin
-                if (clr_button || sw ||  sum_button) begin
+                if (clr_button || load_button ||  sum_button) begin
                     Q_next <= CLEAR;
                 end else begin
                     Q_next <= ADD1;
