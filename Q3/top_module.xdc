@@ -2,11 +2,6 @@
 set_property -dict {PACKAGE_PIN E3 IOSTANDARD LVCMOS33} [get_ports sys_clk]
 create_clock -period 10.000 -name sys_clk_pin -waveform {0.000 5.000} -add [get_ports sys_clk]
 
-
-##Switches
-
-set_property -dict {PACKAGE_PIN J15 IOSTANDARD LVCMOS33} [get_ports sw]
-
 ##7 segment display
 
 set_property -dict {PACKAGE_PIN T10 IOSTANDARD LVCMOS33} [get_ports CA]
@@ -35,6 +30,7 @@ set_property -dict {PACKAGE_PIN C12 IOSTANDARD LVCMOS33} [get_ports sys_rst_n]
 
 set_property -dict {PACKAGE_PIN N17 IOSTANDARD LVCMOS33} [get_ports sum_button]
 set_property -dict {PACKAGE_PIN M18 IOSTANDARD LVCMOS33} [get_ports clr_button]
+set_property -dict {PACKAGE_PIN M17 IOSTANDARD LVCMOS33} [get_ports load_button]
 
 ##Pmod Header JA
 
