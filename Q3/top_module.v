@@ -25,7 +25,6 @@ module top_module (
     reg [7:0] display_bi;
     wire [7:0] display_dec;
     (* mark_debug = "true", dont_touch = "true" *)wire [3:0] key_pad;
-    (* mark_debug = "true", dont_touch = "true" *)wire [31:0] temp;
     reg [7:0] audend;
     reg [7:0] addend;
     wire [7:0] sum;
@@ -43,8 +42,6 @@ module top_module (
     (* mark_debug = "true", dont_touch = "true" *)reg [2:0] Q;
     (* mark_debug = "true", dont_touch = "true" *)reg [2:0] Q_next;
 
-    assign temp = {{6{4'hf}}, display_dec};
-
     keypad uut (
         .sys_clk(sys_clk),
         .sys_rst_n(sys_rst_n),
@@ -58,7 +55,7 @@ module top_module (
         .locked_out(key_pad)
     );
 
-    wire [7:0] display_dec_no_zero;
+    wire [7:0] display_dec_no_zero; // removing leading zero
     assign display_dec_no_zero = (display_dec[7:0] > 8'h09) ? display_dec[7:0] : {4'hf, display_dec[3:0]};
 
     (* keep_hierarchy = "yes" *)marquee #(.N(32)) uut2 (
@@ -66,7 +63,7 @@ module top_module (
         .sys_rst_n(sys_rst_n),
         .enable(1'b0),
         .dir(1'b0),
-        .seq({{6{4'hf}}, display_dec_no_zero}), //這裡為什麼
+        .seq({{6{4'hf}}, display_dec_no_zero}),
         .CA(CA),
         .CB(CB),
         .CC(CC),
@@ -136,7 +133,7 @@ always @(*) begin
             end
             default: Q_next <= ADD1;
         endcase
-    end//改了posedge, combinational circuit, clr_button || sw ||  sum_button, clr_button優先及最高
+    end
 
     always @(*) begin
         case (Q)
@@ -157,8 +154,7 @@ always @(*) begin
             end
             default: display_bi = idle_val;
         endcase
-    end //這算是Moore但因為後面是Mealy所以這其實算Mealy
-
+    end
 
     always @(posedge sys_clk or negedge sys_rst_n) begin
         if (!sys_rst_n) begin
@@ -168,7 +164,7 @@ always @(*) begin
         end else if (Q == CLEAR) begin
             audend <= 8'h00;
         end
-    end //這就是Mealy Machine
+    end
 
 
     always @(posedge sys_clk or negedge sys_rst_n) begin
