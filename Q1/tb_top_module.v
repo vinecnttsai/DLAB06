@@ -35,11 +35,10 @@ module top_modul_tb;
 
     initial begin
         sys_clk = 0;
-        forever #5 sys_clk = ~sys_clk; // 10ns period
+        forever #5 sys_clk = ~sys_clk;
     end
 
     initial begin
-        // Initialize inputs
         sys_rst_n = 1;
         enable = 0;
         dir = 0;
@@ -48,15 +47,15 @@ module top_modul_tb;
         #3 sys_rst_n = 0;
         #3 sys_rst_n = 1;
 
-        // Test enable
-        #50;
-
-        // Enable shifting to left
-        enable = 1;
+        // Disable shifting
+        enable = 0;
         dir = 0; // shift left
 
+        // Enable shifting to left
+        #1000 enable = 1;
+
         // Run for some time
-        #5000;
+        #4000;
 
         // Change direction to right
         dir = 1; // shift right
