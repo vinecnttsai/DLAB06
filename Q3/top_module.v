@@ -20,7 +20,7 @@ module top_module (
     output CG,
     output DP,
     output [7:0] AN
-    //output [3:0] test // for Simulation
+    //,input [3:0] test // for Simulation
 );
     reg [7:0] display_bi;
     wire [7:0] display_dec;
@@ -38,7 +38,6 @@ module top_module (
                     LOAD = 2,
                     SUM = 3,
                     CLEAR = 4;
-    // debug
     (* mark_debug = "true", dont_touch = "true" *)wire [3:0] key_pad;
     (* mark_debug = "true", dont_touch = "true" *)reg [2:0] Q;
     (* mark_debug = "true", dont_touch = "true" *)reg [2:0] Q_next;
@@ -54,10 +53,11 @@ module top_module (
         .C(C),
         .D(D),
         .locked_out(key_pad)
+        //.locked_out() // for Simulation
     );
-    // assign key_pad = test // for Simulation
+    //assign key_pad = test;
 
-    wire [7:0] display_dec_no_zero; // removing leading zero
+    wire [7:0] display_dec_no_zero;
     assign display_dec_no_zero = (display_dec[7:0] > 8'h09) ? display_dec[7:0] : {4'hf, display_dec[3:0]};
 
     (* keep_hierarchy = "yes" *)marquee #(.N(32)) uut2 (
@@ -94,46 +94,46 @@ always @(*) begin
         case (Q)
             ADD1: begin
                 if (clr_button) begin
-                    Q_next <= CLEAR;
+                    Q_next = CLEAR;
                 end else if (load_button && augend != 8'h00) begin
-                    Q_next <= ADD2;
+                    Q_next = ADD2;
                 end else begin
-                    Q_next <= ADD1;
+                    Q_next = ADD1;
                 end
             end
             ADD2: begin
                 if (clr_button) begin
-                    Q_next <= CLEAR;
+                    Q_next = CLEAR;
                 end else if (load_button && addend != 8'h00) begin
-                    Q_next <= LOAD;
+                    Q_next = LOAD;
                 end else begin
-                    Q_next <= ADD2;
+                    Q_next = ADD2;
                 end
             end
             LOAD: begin
                 if (clr_button) begin
-                    Q_next <= CLEAR;
+                    Q_next = CLEAR;
                 end else if (sum_button) begin
-                    Q_next <= SUM;
+                    Q_next = SUM;
                 end else begin
                     Q_next <= LOAD;
                 end
             end
             SUM: begin
                 if (clr_button) begin
-                    Q_next <= CLEAR;
+                    Q_next = CLEAR;
                 end else begin
-                    Q_next <= SUM;
+                    Q_next = SUM;
                 end
             end
             CLEAR: begin
                 if (clr_button || load_button ||  sum_button) begin
-                    Q_next <= CLEAR;
+                    Q_next = CLEAR;
                 end else begin
-                    Q_next <= ADD1;
+                    Q_next = ADD1;
                 end
             end
-            default: Q_next <= ADD1;
+            default: Q_next = CLEAR;
         endcase
     end
 
@@ -157,6 +157,7 @@ always @(*) begin
             default: display_bi = idle_val;
         endcase
     end
+
 
     always @(posedge sys_clk or negedge sys_rst_n) begin
         if (!sys_rst_n) begin
