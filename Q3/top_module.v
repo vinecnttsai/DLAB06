@@ -24,7 +24,7 @@ module top_module (
 );
     reg [7:0] display_bi;
     wire [7:0] display_dec;
-    reg [7:0] audend;
+    reg [7:0] augend;
     reg [7:0] addend;
     wire [7:0] sum;
     wire cout;
@@ -95,7 +95,7 @@ always @(*) begin
             ADD1: begin
                 if (clr_button) begin
                     Q_next <= CLEAR;
-                end else if (load_button) begin
+                end else if (load_button && augend != 8'h00) begin
                     Q_next <= ADD2;
                 end else begin
                     Q_next <= ADD1;
@@ -104,7 +104,7 @@ always @(*) begin
             ADD2: begin
                 if (clr_button) begin
                     Q_next <= CLEAR;
-                end else if (load_button) begin
+                end else if (load_button && addend != 8'h00) begin
                     Q_next <= LOAD;
                 end else begin
                     Q_next <= ADD2;
@@ -140,7 +140,7 @@ always @(*) begin
     always @(*) begin
         case (Q)
             ADD1: begin
-                display_bi = audend;
+                display_bi = augend;
             end
             ADD2: begin
                 display_bi = addend;
@@ -160,11 +160,11 @@ always @(*) begin
 
     always @(posedge sys_clk or negedge sys_rst_n) begin
         if (!sys_rst_n) begin
-            audend <= 8'h00;
+            augend <= 8'h00;
         end else if (Q == ADD1 && key_pad != 4'hf) begin
-            audend <= {4'h0, key_pad};
+            augend <= {4'h0, key_pad};
         end else if (Q == CLEAR) begin
-            audend <= 8'h00;
+            augend <= 8'h00;
         end
     end
 
@@ -179,6 +179,6 @@ always @(*) begin
         end
     end
 
-    assign {cout, sum} = audend + addend;
+    assign {cout, sum} = augend + addend;
 
 endmodule
