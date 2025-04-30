@@ -32,12 +32,10 @@ module top_module_tb;
         .test(key_pad)
     );
 
-    // Clock Generation
     always begin
         #5 sys_clk = ~sys_clk;
     end
 
-    // Stimulus Generation
     integer k, j;
     initial begin
         // Initialize Inputs
