@@ -26,8 +26,8 @@ module top_module (
     wire [7:0] display_dec;
     (* mark_debug = "true", dont_touch = "true" *)wire [3:0] key_pad;
     (* mark_debug = "true", dont_touch = "true" *)wire [31:0] temp;
-    reg [7:0] add1;
-    reg [7:0] add2;
+    reg [7:0] audend;
+    reg [7:0] addend;
     wire [7:0] sum;
     wire cout;
     parameter [3:0] load_val = 4'ha;
@@ -141,10 +141,10 @@ always @(*) begin
     always @(*) begin
         case (Q)
             IDLE1: begin
-                display_bi = add1;
+                display_bi = audend;
             end
             IDLE2: begin
-                display_bi = add2;
+                display_bi = addend;
             end
             LOAD: begin
                 display_bi = idle_val;
@@ -162,25 +162,25 @@ always @(*) begin
 
     always @(posedge sys_clk or negedge sys_rst_n) begin
         if (!sys_rst_n) begin
-            add1 <= 8'h00;
+            audend <= 8'h00;
         end else if (Q == IDLE1 && key_pad != 4'hf) begin
-            add1 <= {4'h0, key_pad};
+            audend <= {4'h0, key_pad};
         end else if (Q == CLEAR) begin
-            add1 <= 8'h00;
+            audend <= 8'h00;
         end
     end //這就是Mealy Machine
 
 
     always @(posedge sys_clk or negedge sys_rst_n) begin
         if (!sys_rst_n) begin
-            add2 <= 8'h00;
+            addend <= 8'h00;
         end else if (Q == IDLE2 && key_pad != 4'hf) begin
-            add2 <= {4'h0, key_pad};
+            addend <= {4'h0, key_pad};
         end else if (Q == CLEAR) begin
-            add2 <= 8'h00;
+            addend <= 8'h00;
         end
     end
 
-    assign {cout, sum} = add1 + add2;
+    assign {cout, sum} = audend + addend;
 
 endmodule
