@@ -35,8 +35,8 @@ module top_module (
     parameter [3:0] noise_val = 4'hf;
     parameter [7:0] idle_val = 8'h00;
     //FSM
-    parameter [2:0] IDLE1 = 0,
-                    IDLE2 = 1,
+    parameter [2:0] ADD1 = 0,
+                    ADD2 = 1,
                     LOAD = 2,
                     SUM = 3,
                     CLEAR = 4;
@@ -85,7 +85,7 @@ module top_module (
 
 always @(posedge sys_clk or negedge sys_rst_n) begin
     if (!sys_rst_n) begin
-        Q <= IDLE1;
+        Q <= ADD1;
     end else begin
         Q <= Q_next;
     end
@@ -93,22 +93,22 @@ end
        
 always @(*) begin
         case (Q)
-            IDLE1: begin
+            ADD1: begin
                 if (clr_button) begin
                     Q_next <= CLEAR;
                 end else if (sw) begin
-                    Q_next <= IDLE2;
+                    Q_next <= ADD2;
                 end else begin
-                    Q_next <= IDLE1;
+                    Q_next <= ADD1;
                 end
             end
-            IDLE2: begin
+            ADD2: begin
                 if (clr_button) begin
                     Q_next <= CLEAR;
                 end else if (!sw) begin
                     Q_next <= LOAD;
                 end else begin
-                    Q_next <= IDLE2;
+                    Q_next <= ADD2;
                 end
             end
             LOAD: begin
@@ -131,19 +131,19 @@ always @(*) begin
                 if (clr_button || sw ||  sum_button) begin
                     Q_next <= CLEAR;
                 end else begin
-                    Q_next <= IDLE1;
+                    Q_next <= ADD1;
                 end
             end
-            default: Q_next <= IDLE1;
+            default: Q_next <= ADD1;
         endcase
     end//改了posedge, combinational circuit, clr_button || sw ||  sum_button, clr_button優先及最高
 
     always @(*) begin
         case (Q)
-            IDLE1: begin
+            ADD1: begin
                 display_bi = audend;
             end
-            IDLE2: begin
+            ADD2: begin
                 display_bi = addend;
             end
             LOAD: begin
@@ -163,7 +163,7 @@ always @(*) begin
     always @(posedge sys_clk or negedge sys_rst_n) begin
         if (!sys_rst_n) begin
             audend <= 8'h00;
-        end else if (Q == IDLE1 && key_pad != 4'hf) begin
+        end else if (Q == ADD1 && key_pad != 4'hf) begin
             audend <= {4'h0, key_pad};
         end else if (Q == CLEAR) begin
             audend <= 8'h00;
@@ -174,7 +174,7 @@ always @(*) begin
     always @(posedge sys_clk or negedge sys_rst_n) begin
         if (!sys_rst_n) begin
             addend <= 8'h00;
-        end else if (Q == IDLE2 && key_pad != 4'hf) begin
+        end else if (Q == ADD2 && key_pad != 4'hf) begin
             addend <= {4'h0, key_pad};
         end else if (Q == CLEAR) begin
             addend <= 8'h00;
