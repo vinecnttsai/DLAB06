@@ -11,14 +11,15 @@ module keypad(
     output [3:0] locked_out
 );
 
-    (*mark_debug = "true", dont_touch = "true"*)reg [3:0] out;
-    (*mark_debug = "true", dont_touch = "true"*)wire scn_clk;
+
     parameter default_out = 4'hf;
     parameter IDLE = 0, HOLD = 1;
     parameter SCN_rate = 1000;
     parameter SCN_WIDTH = 4;
     parameter SCN_cnt = SCN_rate * SCN_WIDTH - 1;
     parameter SCN_cnt_log = $clog2(SCN_cnt + 1);
+    (*mark_debug = "true", dont_touch = "true"*)reg [3:0] out;
+    (*mark_debug = "true", dont_touch = "true"*)wire scn_clk;
     (*mark_debug = "true", dont_touch = "true"*)reg Q;
     (*mark_debug = "true", dont_touch = "true"*)reg Q_next;
     (*mark_debug = "true", dont_touch = "true"*)wire [SCN_cnt_log-1:0] count;
