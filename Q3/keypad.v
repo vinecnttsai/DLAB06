@@ -79,25 +79,21 @@ module keypad(
     
 
     always @(*) begin
-        if (!sys_rst_n) begin
-            out = 4'hf;
-        end
-
-            case({A, B, C, D, E, F, G})
-                7'b1000100: out <= 4'h1;
-                7'b0100100: out <= 4'h4;
-                7'b0010100: out <= 4'h7;
-                7'b0001100: out <= 4'ha;
-                7'b1000010: out <= 4'h2;
-                7'b0100010: out <= 4'h5;
-                7'b0010010: out <= 4'h8;
-                7'b0001010: out <= 4'hb;
-                7'b1000001: out <= 4'h3;
-                7'b0100001: out <= 4'h6;
-                7'b0010001: out <= 4'h9;
-                7'b0001001: out <= 4'hc;
-                default: out <= 4'hf;
-            endcase
+        case({A, B, C, D, E, F, G})
+            7'b1000100: out = 4'h1;
+            7'b0100100: out = 4'h4;
+            7'b0010100: out = 4'h7;
+            7'b0001100: out = 4'ha;
+            7'b1000010: out = 4'h2;
+            7'b0100010: out = 4'h5;
+            7'b0010010: out = 4'h8;
+            7'b0001010: out = 4'hb;
+            7'b1000001: out = 4'h3;
+            7'b0100001: out = 4'h6;
+            7'b0010001: out = 4'h9;
+            7'b0001001: out = 4'hc;
+            default: out = 4'hf;
+        endcase
     end
 
 endmodule
@@ -172,7 +168,7 @@ module keypad_locker #(
     output reg [3:0] locked
 );
 
-    always @(posedge clk or negedge lock) begin
+    always @(posedge clk) begin
         if (!lock) begin
             cnt <= 0;
         end else if (cnt == SCN_cnt - 1) begin
@@ -182,7 +178,7 @@ module keypad_locker #(
         end
     end
 
-    always @(posedge clk or negedge lock) begin
+    always @(posedge clk) begin
         if (!lock) begin
             locked <= org;
         end
