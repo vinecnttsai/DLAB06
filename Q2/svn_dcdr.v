@@ -1,23 +1,3 @@
-/* 
-//  A seven-segment display decoder
-//  Design method: behavior
-//  Displays decimal numbers from 0 to 9, including the decimal point
-//  Inputs from 1010 to 1111 will turn off the display (go dark)
-//  Common anode type: set LOW to illuminate the LED segment
-*/
-
-/*  8 segment display pinout
-//    |--CA--|
-//    CF     CB
-//    |--CG--|
-//    CE     CC
-//    |--CD--|  DP
-*/
-
-/*
-//  set AN to LOW to enable the digit
-*/
-
 module svn_dcdr (
   input [3:0] in,
   output CA, CB, CC, CD, CE, CF, CG, DP
