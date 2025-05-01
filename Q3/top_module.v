@@ -55,7 +55,7 @@ module top_module (
         .locked_out(key_pad)
         //.locked_out() // for Simulation
     );
-    //assign key_pad = test;
+    //assign key_pad = test; // for Simulation
 
     wire [7:0] display_dec_no_zero;
     assign display_dec_no_zero = (display_dec[7:0] > 8'h09) ? display_dec[7:0] : {4'hf, display_dec[3:0]};
