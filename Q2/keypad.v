@@ -16,7 +16,7 @@ module keypad(
     parameter default_out = 4'hf;
     parameter IDLE = 0, HOLD = 1;
     parameter SCN_rate = 1000;
-    parameter SCN_WIDTH = 4;//看要不要改多一點, 記得記錄一下
+    parameter SCN_WIDTH = 4;
     parameter SCN_cnt = SCN_rate * SCN_WIDTH - 1;
     parameter SCN_cnt_log = $clog2(SCN_cnt + 1);
     (*mark_debug = "true", dont_touch = "true"*)reg Q;
@@ -74,7 +74,7 @@ module keypad(
             end
             default: Q_next = IDLE;
         endcase
-    end//改了IDLE到HOLD的條件判斷, 原本寫法case {E, F, G}想一下為什麼會錯, 會出現76f76f其中E, F, G會晚A, B, C, D一點點
+    end
     
 
     always @(*) begin
@@ -97,7 +97,7 @@ module keypad(
                 7'b0001001: out <= 4'hc;
                 default: out <= 4'hf;
             endcase
-    end //Mealy Machine可以寫得更好
+    end
 
 endmodule
 
