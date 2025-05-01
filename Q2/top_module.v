@@ -45,6 +45,6 @@ module top_module (
         .CG(CG),
         .DP(DP)
     );
-    assign AN = 8'b1111_1110; // Display on the first digit
+    assign AN = 8'b1111_1110;
 
 endmodule
