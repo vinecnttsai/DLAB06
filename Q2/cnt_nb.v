@@ -25,7 +25,7 @@ module cnt_nb #(
         end
     end
 
-    always @(posedge clk or negedge sys_rst_n) begin //改這個了哦
+    always @(posedge clk or negedge sys_rst_n) begin
         if (!sys_rst_n) begin
             dir <= 1'b0;
         end else begin
