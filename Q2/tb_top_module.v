@@ -56,8 +56,8 @@ module tb_top_module ();
             #2 // delay
             {E, F, G} = key;
             #100;
-            {E, F, G} = 3'b000;
             #2 // delay
+            {E, F, G} = 3'b000;
         end
     endtask
 
