@@ -45,7 +45,7 @@ module tb_top_module ();
         #30;  bounce_key(3'b001, 5);
 
         #300;
-        press_key(3'b010); // delay 6ns
+        press_key(3'b010);
 
         #50;
         bounce_key(3'b010, 4);
