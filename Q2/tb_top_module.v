@@ -33,20 +33,20 @@ module tb_top_module ();
 
     initial begin
         sys_rst_n = 1;
-        {E, F, G} = 3'b111;
+        {E, F, G} = 3'b000;
         #3 sys_rst_n = 0;
         #3 sys_rst_n = 1;
 
         #50;
-        press_key(3'b110);
+        press_key(3'b001);
 
-        #30;  bounce_key(3'b110, 5);
+        #30;  bounce_key(3'b001, 5);
 
         #300;
-        press_key(3'b101);
+        press_key(3'b010);
 
         #50;
-        bounce_key(3'b101, 4);
+        bounce_key(3'b010, 4);
 
         #1000;
         $finish;
@@ -56,7 +56,7 @@ module tb_top_module ();
         begin
             {E, F, G} = key;
             #100;
-            {E, F, G} = 3'b111;
+            {E, F, G} = 3'b000;
         end
     endtask
 
@@ -68,7 +68,7 @@ module tb_top_module ();
                 #10;
                 {E, F, G} = key + 3;
                 #10;
-                {E, F, G} = 3'b111;
+                {E, F, G} = 3'b000;
                 #10;
             end
         end
