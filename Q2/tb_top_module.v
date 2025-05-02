@@ -53,10 +53,10 @@ module tb_top_module ();
 
     task press_key(input [2:0] key);
         begin
-            #2 // delay
+            #2; // delay
             {E, F, G} = key;
             #100;
-            #2 // delay
+            #2; // delay
             {E, F, G} = 3'b000;
         end
     endtask
