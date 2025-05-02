@@ -14,7 +14,7 @@ module keypad(
 
     parameter default_out = 4'hf;
     parameter IDLE = 0, HOLD = 1;
-    parameter SCN_rate = 1000;
+    parameter SCN_rate = 1000; // 10 for Simualtion
     parameter SCN_WIDTH = 4;
     parameter SCN_cnt = SCN_rate * SCN_WIDTH - 1;
     parameter SCN_cnt_log = $clog2(SCN_cnt + 1);
