@@ -39,16 +39,13 @@ module tb_top_module ();
         #3 sys_rst_n = 0;
         #3 sys_rst_n = 1;
 
-        #50;
-        press_key(3'b001); // delay 6ns
+        #100 press_key(3'b001);
 
-        #30;  bounce_key(3'b001, 5);
+        #30 bounce_key(3'b001, 5);
 
-        #300;
-        press_key(3'b010);
+        #300 press_key(3'b010);
 
-        #50;
-        bounce_key(3'b010, 4);
+        #50 bounce_key(3'b010, 4);
 
         #1000;
         $finish;
@@ -56,9 +53,11 @@ module tb_top_module ();
 
     task press_key(input [2:0] key);
         begin
+            #2 // delay
             {E, F, G} = key;
             #100;
             {E, F, G} = 3'b000;
+            #2 // delay
         end
     endtask
 
