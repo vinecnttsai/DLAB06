@@ -38,12 +38,12 @@ module tb_top_module ();
         #3 sys_rst_n = 1;
 
         #50;
-        press_key(3'b001); // delay 6ns
+        press_key(3'b001); // delay 6
 
         #30;  bounce_key(3'b001, 5);
 
         #300;
-        press_key(3'b010); // delay 6ns
+        press_key(3'b010); // delay 6
 
         #50;
         bounce_key(3'b010, 4);
