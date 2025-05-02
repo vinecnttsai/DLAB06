@@ -1,3 +1,5 @@
+`timescale 1ns/1ps
+
 module tb_top_module ();
 
     reg sys_clk;
@@ -38,12 +40,12 @@ module tb_top_module ();
         #3 sys_rst_n = 1;
 
         #50;
-        press_key(3'b001); // delay 6
+        press_key(3'b001); // delay 6ns
 
         #30;  bounce_key(3'b001, 5);
 
         #300;
-        press_key(3'b010); // delay 6
+        press_key(3'b010); // delay 6ns
 
         #50;
         bounce_key(3'b010, 4);
